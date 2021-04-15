@@ -84,9 +84,9 @@ public class CentrosCuadrados extends JFrame {
 				int res = cuadradoMedio(sem.intValue(), ite.intValue());
 				System.out.println(res);
 				
-				//String restring = res.toString();
+				String resString = ""+res;
 				
-				resultados.setText("holi");
+				resultados.setText(resString);
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
