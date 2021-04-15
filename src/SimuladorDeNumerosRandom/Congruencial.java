@@ -14,15 +14,18 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Congruencial extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField semilla;
+	private JTextField a;
+	private JTextField c;
+	private JTextField modulo;
+	private JTextField iteraciones;
+	static JTextArea resultados = new JTextArea();
 
 	/**
 	 * Launch the application.
@@ -58,30 +61,30 @@ public class Congruencial extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(113, 35, 86, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		semilla = new JTextField();
+		semilla.setBounds(113, 35, 86, 20);
+		panel.add(semilla);
+		semilla.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(268, 35, 86, 20);
-		textField_1.setColumns(10);
-		panel.add(textField_1);
+		a = new JTextField();
+		a.setBounds(268, 35, 86, 20);
+		a.setColumns(10);
+		panel.add(a);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(268, 78, 86, 20);
-		panel.add(textField_2);
+		c = new JTextField();
+		c.setColumns(10);
+		c.setBounds(268, 78, 86, 20);
+		panel.add(c);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(113, 78, 86, 20);
-		panel.add(textField_3);
+		modulo = new JTextField();
+		modulo.setColumns(10);
+		modulo.setBounds(113, 78, 86, 20);
+		panel.add(modulo);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(113, 125, 86, 20);
-		panel.add(textField_4);
+		iteraciones = new JTextField();
+		iteraciones.setColumns(10);
+		iteraciones.setBounds(113, 125, 86, 20);
+		panel.add(iteraciones);
 		
 		JLabel lblNewLabel_1 = new JLabel("Semilla:");
 		lblNewLabel_1.setBounds(57, 38, 46, 14);
@@ -96,16 +99,34 @@ public class Congruencial extends JFrame {
 		panel.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("c: ");
-		lblNewLabel_2_2.setBounds(246, 80, 12, 17);
+		lblNewLabel_2_2.setBounds(246, 80, 21, 17);
 		panel.add(lblNewLabel_2_2);
 		
 		JLabel lblNewLabel_2_3 = new JLabel("Iteraciones: ");
 		lblNewLabel_2_3.setBounds(37, 128, 61, 14);
 		panel.add(lblNewLabel_2_3);
 		
-		JButton btnNewButton_1 = new JButton("Calcular");
-		btnNewButton_1.setBounds(401, 152, 89, 23);
-		panel.add(btnNewButton_1);
+		JButton calcularRes = new JButton("Calcular");
+		calcularRes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sem = Integer.parseInt(semilla.getText());
+				int m = Integer.parseInt(modulo.getText());
+				int aInput = Integer.parseInt(a.getText());
+				int cInput = Integer.parseInt(c.getText());
+				int ite = Integer.parseInt(iteraciones.getText());
+				if(sem < 1) {
+					resultados.setText("");
+					resultados.setText("La semilla debe de ser mayor que 0");
+				} else if (ite < 1){
+					resultados.setText("");
+					resultados.setText("La iteración debe ser mayor a 0");
+				} else {
+					congruencial(sem, m, aInput, cInput, ite);
+				}
+			}
+		});
+		calcularRes.setBounds(401, 152, 89, 23);
+		panel.add(calcularRes);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(30, 144, 255)));
@@ -113,9 +134,8 @@ public class Congruencial extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(10, 25, 509, 184);
-		panel_1.add(textArea_1);
+		resultados.setBounds(10, 25, 509, 184);
+		panel_1.add(resultados);
 		
 		JLabel lblNewLabel = new JLabel("M\u00E9todo Congruencial");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -158,6 +178,8 @@ public class Congruencial extends JFrame {
 	            int resIteracion = (a * congruencial(semilla, modulo, a, c, iteraciones-1)+c) % modulo;
 	            System.out.println("X" + iteraciones + ":");
 	            System.out.println("Numero aleatorio: " + resIteracion);
+	            resultados.setText("");
+	            resultados.append("Iteracion: " + iteraciones + " | No. aleatorio: " + resIteracion + "\n");
 	            return resIteracion;
 	        }
 	    }
