@@ -25,7 +25,7 @@ public class CentrosCuadrados extends JFrame {
 	private JPanel contentPane;
 	private JTextField semilla;
 	private JTextField iteraciones;
-	JTextArea resultados = new JTextArea();
+	static JTextArea resultados = new JTextArea();
 	
 	/**
 	 * Launch the application.
@@ -77,16 +77,17 @@ public class CentrosCuadrados extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Hay que hacer validaciones
-				
-				Integer sem = Integer.parseInt(semilla.getText());
-				Integer ite =  Integer.parseInt(iteraciones.getText());
-				
-				int res = cuadradoMedio(sem.intValue(), ite.intValue());
-				System.out.println(res);
-				
-				String resString = ""+res;
-				
-				resultados.setText(resString);
+				if(semilla.getText().length() < 4) {
+					resultados.setText("");
+					resultados.setText("La semilla debe de ser de al menos 4 dígitos");
+				} else if (Integer.parseInt(iteraciones.getText()) < 1){
+					resultados.setText("");
+					resultados.setText("La iteración debe ser mayor a 0");
+				} else {
+					Integer sem = Integer.parseInt(semilla.getText());
+					Integer ite =  Integer.parseInt(iteraciones.getText());	
+					cuadradoMedio(sem.intValue(), ite.intValue());
+				}
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -172,8 +173,8 @@ public class CentrosCuadrados extends JFrame {
             }
             medio = Integer.parseInt(numCompuesto.substring(2, 6));
             //Checar como invertir lo de las iteraciones
-            System.out.println("X" + iteraciones + ":");
-            System.out.println("Numero aleatorio: " + medio);
+            resultados.setText("");
+            resultados.append("Semilla: " + cuadrado + " | Generador: " + numCompuesto + " | No. Aleatorio: " + medio + "\n");
             return cuadradoMedio(medio, iteraciones-1);
         }
 	}
