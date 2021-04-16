@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.*;
 
 public class Congruencial extends JFrame {
 
@@ -153,6 +154,13 @@ public class Congruencial extends JFrame {
 		panel_1_1.add(textArea_1_1);
 		
 		JButton btnNewButton_2 = new JButton("Calcular");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Double> b = prueba();
+				ChiCuadrada cc = new ChiCuadrada(b);
+				cc.CalcularValores();
+			}
+		});
 		btnNewButton_2.setBounds(413, 156, 89, 23);
 		panel_1_1.add(btnNewButton_2);
 		
@@ -178,9 +186,45 @@ public class Congruencial extends JFrame {
 	            int resIteracion = (a * congruencial(semilla, modulo, a, c, iteraciones-1)+c) % modulo;
 	            System.out.println("X" + iteraciones + ":");
 	            System.out.println("Numero aleatorio: " + resIteracion);
-	            resultados.setText("");
+	            //resultados.setText("");
 	            resultados.append("Iteracion: " + iteraciones + " | No. aleatorio: " + resIteracion + "\n");
 	            return resIteracion;
 	        }
 	    }
+	 
+	 public static ArrayList<Double> prueba() {
+		 
+		 ArrayList<Double> observables = new ArrayList<Double>();
+	        observables.add(0.018);
+	        observables.add(0.037);
+	        observables.add(0.156);
+	        observables.add(0.191);
+	        observables.add(0.213);
+	        observables.add(0.233);
+	        observables.add(0.281);
+	        observables.add(0.383);
+	        observables.add(0.392);
+	        observables.add(0.408);
+	        observables.add(0.411);
+	        observables.add(0.434);
+	        observables.add(0.469);
+	        observables.add(0.541);
+	        observables.add(0.553);
+	        observables.add(0.575);
+	        observables.add(0.598);
+	        observables.add(0.668);
+	        observables.add(0.671);
+	        observables.add(0.719);
+	        observables.add(0.730);
+	        observables.add(0.770);
+	        observables.add(0.771);
+	        observables.add(0.791);
+	        observables.add(0.819);
+	        observables.add(0.826);
+	        observables.add(0.894);
+	        observables.add(0.914);
+	        observables.add(0.984);
+	        observables.add(0.995);
+		 return observables;
+	 }
 }
