@@ -159,6 +159,8 @@ public class Congruencial extends JFrame {
 				ArrayList<Double> b = prueba();
 				ChiCuadrada cc = new ChiCuadrada(b);
 				cc.CalcularValores();
+				double tabla = cc.ChiTable(3, 0.05);
+				System.out.print("Chi tabla " + tabla);
 			}
 		});
 		btnNewButton_2.setBounds(413, 156, 89, 23);
@@ -170,13 +172,32 @@ public class Congruencial extends JFrame {
 		panel_1_2.setBounds(601, 242, 512, 220);
 		contentPane.add(panel_1_2);
 		
-		JTextArea textArea_1_2 = new JTextArea();
-		textArea_1_2.setBounds(10, 32, 492, 130);
-		panel_1_2.add(textArea_1_2);
+		JTextArea resultadosSmirnov = new JTextArea();
+		resultadosSmirnov.setBounds(10, 32, 492, 130);
+		panel_1_2.add(resultadosSmirnov);
 		
-		JButton btnNewButton = new JButton("Calcular");
-		btnNewButton.setBounds(413, 174, 89, 23);
-		panel_1_2.add(btnNewButton);
+		JButton btnSmirnov = new JButton("Calcular");
+		btnSmirnov.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Double> array = prueba();
+				Smirnov smirnov = new Smirnov(array);
+				double d = smirnov.calcular();
+				System.out.println("D: " + d);
+				resultadosSmirnov.append("D: " + d + "\n");
+				double dAlfa = smirnov.kolmogorovSmirnovTabla(0.05);
+				System.out.println(dAlfa);
+				resultadosSmirnov.append("D alfa: " + dAlfa + "\n");
+				if (smirnov.aceptacionHipostesis(0.05)) {
+					resultadosSmirnov.append("Se acepta la hipotesis nula \n");
+					System.out.println("Se acepta la hipotesis nula");
+				} else {
+					resultadosSmirnov.append("Se rechaza la hipotesis nula \n");
+					System.out.println("Se rechaza la hipotesis nula");
+				}
+			}
+		});
+		btnSmirnov.setBounds(413, 174, 89, 23);
+		panel_1_2.add(btnSmirnov);
 	}
 	
 	 public static int congruencial(int semilla, int modulo, int a, int c, int iteraciones){
@@ -193,38 +214,37 @@ public class Congruencial extends JFrame {
 	    }
 	 
 	 public static ArrayList<Double> prueba() {
-		 
 		 ArrayList<Double> observables = new ArrayList<Double>();
-	        observables.add(0.018);
-	        observables.add(0.037);
-	        observables.add(0.156);
-	        observables.add(0.191);
-	        observables.add(0.213);
-	        observables.add(0.233);
-	        observables.add(0.281);
-	        observables.add(0.383);
-	        observables.add(0.392);
-	        observables.add(0.408);
-	        observables.add(0.411);
-	        observables.add(0.434);
-	        observables.add(0.469);
-	        observables.add(0.541);
-	        observables.add(0.553);
-	        observables.add(0.575);
-	        observables.add(0.598);
-	        observables.add(0.668);
-	        observables.add(0.671);
-	        observables.add(0.719);
-	        observables.add(0.730);
-	        observables.add(0.770);
-	        observables.add(0.771);
-	        observables.add(0.791);
-	        observables.add(0.819);
-	        observables.add(0.826);
-	        observables.add(0.894);
-	        observables.add(0.914);
-	        observables.add(0.984);
-	        observables.add(0.995);
+		 observables.add(0.770);
+		 observables.add(0.018);
+		 observables.add(0.037);
+		 observables.add(0.156);
+		 observables.add(0.191);
+		 observables.add(0.213);
+		 observables.add(0.233);
+		 observables.add(0.281);
+		 observables.add(0.383);
+		 observables.add(0.392);
+		 observables.add(0.408);
+		 observables.add(0.411);
+		 observables.add(0.434);
+		 observables.add(0.469);
+		 observables.add(0.541);
+		 observables.add(0.553);
+		 observables.add(0.575);
+		 observables.add(0.598);
+		 observables.add(0.668);
+		 observables.add(0.671);
+		 observables.add(0.719);
+		 observables.add(0.730);
+		 observables.add(0.771);
+		 observables.add(0.791);
+		 observables.add(0.819);
+		 observables.add(0.826);
+		 observables.add(0.894);
+		 observables.add(0.914);
+		 observables.add(0.984);
+		 observables.add(0.995);
 		 return observables;
 	 }
 }

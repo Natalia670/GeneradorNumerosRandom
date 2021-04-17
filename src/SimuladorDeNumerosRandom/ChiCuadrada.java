@@ -1,5 +1,11 @@
 package SimuladorDeNumerosRandom;
 
+import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
+import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
+import org.apache.commons.math3.distribution.ChiSquaredDistribution;
+
 import java.util.ArrayList;
 import java.util.*;
 
@@ -80,5 +86,10 @@ public class ChiCuadrada {
 	            System.out.println(b.get(i));
 	      }
 	}
+	
+	public static double ChiTable(int n, double error) {
+        ChiSquaredDistribution CHD = new ChiSquaredDistribution(n);
+        return CHD.inverseCumulativeProbability(1-error);
+    }
 	
 }
