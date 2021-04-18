@@ -27,6 +27,9 @@ public class Congruencial extends JFrame {
 	private JTextField modulo;
 	private JTextField iteraciones;
 	static JTextArea resultados = new JTextArea();
+	private final JTextField significancia = new JTextField();
+	private final JLabel lblNewLabel_2_2_1 = new JLabel("Significancia:");
+	static ArrayList<Double> observables = new ArrayList<Double>();
 
 	/**
 	 * Launch the application.
@@ -63,48 +66,48 @@ public class Congruencial extends JFrame {
 		panel.setLayout(null);
 		
 		semilla = new JTextField();
-		semilla.setBounds(113, 35, 86, 20);
+		semilla.setBounds(124, 35, 86, 20);
 		panel.add(semilla);
 		semilla.setColumns(10);
 		
 		a = new JTextField();
-		a.setBounds(268, 35, 86, 20);
+		a.setBounds(334, 35, 86, 20);
 		a.setColumns(10);
 		panel.add(a);
 		
 		c = new JTextField();
 		c.setColumns(10);
-		c.setBounds(268, 78, 86, 20);
+		c.setBounds(334, 78, 86, 20);
 		panel.add(c);
 		
 		modulo = new JTextField();
 		modulo.setColumns(10);
-		modulo.setBounds(113, 78, 86, 20);
+		modulo.setBounds(124, 78, 86, 20);
 		panel.add(modulo);
 		
 		iteraciones = new JTextField();
 		iteraciones.setColumns(10);
-		iteraciones.setBounds(113, 125, 86, 20);
+		iteraciones.setBounds(124, 125, 86, 20);
 		panel.add(iteraciones);
 		
 		JLabel lblNewLabel_1 = new JLabel("Semilla:");
-		lblNewLabel_1.setBounds(57, 38, 46, 14);
+		lblNewLabel_1.setBounds(57, 38, 86, 14);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("M\u00F3dulo:");
-		lblNewLabel_2.setBounds(57, 81, 46, 14);
+		lblNewLabel_2.setBounds(57, 81, 73, 14);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("a: ");
-		lblNewLabel_2_1.setBounds(246, 35, 21, 20);
+		lblNewLabel_2_1.setBounds(301, 35, 21, 20);
 		panel.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("c: ");
-		lblNewLabel_2_2.setBounds(246, 80, 21, 17);
+		lblNewLabel_2_2.setBounds(301, 80, 21, 17);
 		panel.add(lblNewLabel_2_2);
 		
 		JLabel lblNewLabel_2_3 = new JLabel("Iteraciones: ");
-		lblNewLabel_2_3.setBounds(37, 128, 61, 14);
+		lblNewLabel_2_3.setBounds(37, 128, 93, 14);
 		panel.add(lblNewLabel_2_3);
 		
 		JButton calcularRes = new JButton("Calcular");
@@ -122,12 +125,20 @@ public class Congruencial extends JFrame {
 					resultados.setText("");
 					resultados.setText("La iteración debe ser mayor a 0");
 				} else {
+					resultados.setText("");
 					congruencial(sem, m, aInput, cInput, ite);
 				}
 			}
 		});
-		calcularRes.setBounds(401, 152, 89, 23);
+		calcularRes.setBounds(423, 157, 89, 23);
 		panel.add(calcularRes);
+		significancia.setColumns(10);
+		significancia.setBounds(334, 125, 86, 20);
+		
+		panel.add(significancia);
+		lblNewLabel_2_2_1.setBounds(237, 127, 85, 17);
+		
+		panel.add(lblNewLabel_2_2_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(30, 144, 255)));
@@ -179,21 +190,24 @@ public class Congruencial extends JFrame {
 		JButton btnSmirnov = new JButton("Calcular");
 		btnSmirnov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Double> array = prueba();
-				Smirnov smirnov = new Smirnov(array);
-				double d = smirnov.calcular();
-				System.out.println("D: " + d);
-				resultadosSmirnov.append("D: " + d + "\n");
-				double dAlfa = smirnov.kolmogorovSmirnovTabla(0.05);
-				System.out.println(dAlfa);
-				resultadosSmirnov.append("D alfa: " + dAlfa + "\n");
-				if (smirnov.aceptacionHipostesis(0.05)) {
-					resultadosSmirnov.append("Se acepta la hipotesis nula \n");
-					System.out.println("Se acepta la hipotesis nula");
+				//Faltan validaciones de input
+				if(observables.size() > 0) {
+					double signi = Double.parseDouble(significancia.getText());
+					resultadosSmirnov.setText("");
+					Smirnov smirnov = new Smirnov(observables);
+					double d = smirnov.calcular();
+					resultadosSmirnov.append("D: " + d + "\n");
+					double dAlfa = smirnov.kolmogorovSmirnovTabla(signi);
+					resultadosSmirnov.append("D alfa: " + dAlfa + "\n");
+					if (smirnov.aceptacionHipostesis(signi)) {
+						resultadosSmirnov.append("Se acepta la hipotesis nula \n");
+					} else {
+						resultadosSmirnov.append("Se rechaza la hipotesis nula \n");
+					}
 				} else {
-					resultadosSmirnov.append("Se rechaza la hipotesis nula \n");
-					System.out.println("Se rechaza la hipotesis nula");
+					resultadosSmirnov.append("Lista vacia \n");
 				}
+				
 			}
 		});
 		btnSmirnov.setBounds(413, 174, 89, 23);
@@ -205,10 +219,9 @@ public class Congruencial extends JFrame {
 	            return semilla;
 	        } else {
 	            int resIteracion = (a * congruencial(semilla, modulo, a, c, iteraciones-1)+c) % modulo;
-	            System.out.println("X" + iteraciones + ":");
-	            System.out.println("Numero aleatorio: " + resIteracion);
-	            //resultados.setText("");
-	            resultados.append("Iteracion: " + iteraciones + " | No. aleatorio: " + resIteracion + "\n");
+	            double ri = (double) resIteracion / (double) modulo;
+	            observables.add(ri);
+	            resultados.append("Iteracion: " + iteraciones + " | No. aleatorio: " + resIteracion + " | Ri: " + ri + "\n");
 	            return resIteracion;
 	        }
 	    }

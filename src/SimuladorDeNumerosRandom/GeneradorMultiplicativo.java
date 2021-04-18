@@ -14,14 +14,20 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class GeneradorMultiplicativo extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField semilla;
+	private JTextField iteraciones;
+	private JTextField modulo;
+	private JTextField a;
+	private JTextField significancia;
+	static JTextArea resultados = new JTextArea();
+	static ArrayList<Double> observables = new ArrayList<Double>();
 
 	/**
 	 * Launch the application.
@@ -57,32 +63,32 @@ public class GeneradorMultiplicativo extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(113, 35, 86, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		semilla = new JTextField();
+		semilla.setBounds(115, 35, 86, 20);
+		panel.add(semilla);
+		semilla.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(355, 35, 86, 20);
-		textField_1.setColumns(10);
-		panel.add(textField_1);
+		iteraciones = new JTextField();
+		iteraciones.setBounds(355, 35, 86, 20);
+		iteraciones.setColumns(10);
+		panel.add(iteraciones);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(113, 78, 86, 20);
-		panel.add(textField_3);
+		modulo = new JTextField();
+		modulo.setColumns(10);
+		modulo.setBounds(115, 78, 86, 20);
+		panel.add(modulo);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(113, 125, 86, 20);
-		panel.add(textField_4);
+		a = new JTextField();
+		a.setColumns(10);
+		a.setBounds(115, 125, 86, 20);
+		panel.add(a);
 		
 		JLabel lblNewLabel_1 = new JLabel("Semilla:");
-		lblNewLabel_1.setBounds(57, 38, 46, 14);
+		lblNewLabel_1.setBounds(57, 38, 61, 14);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("M\u00F3dulo:");
-		lblNewLabel_2.setBounds(57, 81, 46, 14);
+		lblNewLabel_2.setBounds(57, 81, 61, 14);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("a: ");
@@ -90,12 +96,17 @@ public class GeneradorMultiplicativo extends JFrame {
 		panel.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_3 = new JLabel("Iteraciones: ");
-		lblNewLabel_2_3.setBounds(286, 38, 61, 14);
+		lblNewLabel_2_3.setBounds(261, 38, 86, 14);
 		panel.add(lblNewLabel_2_3);
 		
-		JButton btnNewButton_1 = new JButton("Calcular");
-		btnNewButton_1.setBounds(401, 152, 89, 23);
-		panel.add(btnNewButton_1);
+		JLabel lblNewLabel_2_3_1 = new JLabel("Significancia:");
+		lblNewLabel_2_3_1.setBounds(261, 80, 86, 14);
+		panel.add(lblNewLabel_2_3_1);
+		
+		significancia = new JTextField();
+		significancia.setColumns(10);
+		significancia.setBounds(355, 75, 86, 20);
+		panel.add(significancia);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(30, 144, 255)));
@@ -103,9 +114,30 @@ public class GeneradorMultiplicativo extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(10, 25, 509, 184);
-		panel_1.add(textArea_1);
+		resultados.setBounds(10, 25, 509, 184);
+		panel_1.add(resultados);
+		
+		JButton calcular = new JButton("Calcular");
+		calcular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sem = Integer.parseInt(semilla.getText());
+				int m = Integer.parseInt(modulo.getText());
+				int aInput = Integer.parseInt(a.getText());
+				int ite = Integer.parseInt(iteraciones.getText());
+				if(sem < 1) {
+					resultados.setText("");
+					resultados.setText("La semilla debe de ser mayor que 0");
+				} else if (ite < 1){
+					resultados.setText("");
+					resultados.setText("La iteración debe ser mayor a 0");
+				} else {
+					resultados.setText("");
+					multiplicativo(sem, m, aInput, ite);
+				}
+			}
+		});
+		calcular.setBounds(401, 152, 89, 23);
+		panel.add(calcular);
 		
 		JLabel lblNewLabel = new JLabel("Generador Multiplicativo");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -118,13 +150,13 @@ public class GeneradorMultiplicativo extends JFrame {
 		panel_1_1.setBounds(601, 36, 512, 195);
 		contentPane.add(panel_1_1);
 		
-		JTextArea textArea_1_1 = new JTextArea();
-		textArea_1_1.setBounds(10, 25, 492, 120);
-		panel_1_1.add(textArea_1_1);
+		JTextArea res_chi = new JTextArea();
+		res_chi.setBounds(10, 25, 492, 120);
+		panel_1_1.add(res_chi);
 		
-		JButton btnNewButton_2 = new JButton("Calcular");
-		btnNewButton_2.setBounds(413, 156, 89, 23);
-		panel_1_1.add(btnNewButton_2);
+		JButton calcularChi = new JButton("Calcular");
+		calcularChi.setBounds(413, 156, 89, 23);
+		panel_1_1.add(calcularChi);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -132,13 +164,33 @@ public class GeneradorMultiplicativo extends JFrame {
 		panel_1_2.setBounds(601, 242, 512, 220);
 		contentPane.add(panel_1_2);
 		
-		JTextArea textArea_1_2 = new JTextArea();
-		textArea_1_2.setBounds(10, 32, 492, 130);
-		panel_1_2.add(textArea_1_2);
+		JTextArea res_smirnov = new JTextArea();
+		res_smirnov.setBounds(10, 32, 492, 130);
+		panel_1_2.add(res_smirnov);
 		
-		JButton btnNewButton = new JButton("Calcular");
-		btnNewButton.setBounds(413, 174, 89, 23);
-		panel_1_2.add(btnNewButton);
+		JButton calcularSmirnov = new JButton("Calcular");
+		calcularSmirnov.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(observables.size() > 0) {
+					double signi = Double.parseDouble(significancia.getText());
+					res_smirnov.setText("");
+					Smirnov smirnov = new Smirnov(observables);
+					double d = smirnov.calcular();
+					res_smirnov.append("D: " + d + "\n");
+					double dAlfa = smirnov.kolmogorovSmirnovTabla(signi);
+					res_smirnov.append("D alfa: " + dAlfa + "\n");
+					if (smirnov.aceptacionHipostesis(signi)) {
+						res_smirnov.append("Se acepta la hipotesis nula \n");
+					} else {
+						res_smirnov.append("Se rechaza la hipotesis nula \n");
+					}
+				} else {
+					res_smirnov.append("Lista vacia \n");
+				}
+			}
+		});
+		calcularSmirnov.setBounds(413, 174, 89, 23);
+		panel_1_2.add(calcularSmirnov);
 	}
 	
 	  public static int multiplicativo(int semilla, int modulo, int a, int iteraciones){
@@ -146,8 +198,9 @@ public class GeneradorMultiplicativo extends JFrame {
 	            return semilla;
 	        } else {
 	            int resIteracion = (a * multiplicativo(semilla, modulo, a, iteraciones-1)) % modulo;
-	            System.out.println("X" + iteraciones + ":");
-	            System.out.println("Numero aleatorio: " + resIteracion);
+	            double ri = (double) resIteracion / (double) modulo;
+	            observables.add(ri);
+	            resultados.append("Iteracion: " + iteraciones + " | No. aleatorio: " + resIteracion + " | Ri: " + ri + "\n");
 	            return resIteracion;
 	        }
 	    }

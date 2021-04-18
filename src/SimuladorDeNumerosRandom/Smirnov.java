@@ -59,16 +59,16 @@ public class Smirnov{
 		//DMas
 		Double tempDMas = Collections.max(absINRi);
         Double dMas = Math.round(tempDMas*10000.0)/10000.0;
-        System.out.println("D+: " + dMas);
+        //System.out.println("D+: " + dMas);
         
         //DMenos
         Double tempDMenos = Collections.max(riIN);
         Double dMenos = Math.round(tempDMenos*10000.0)/10000.0;
-        System.out.println("D-: " + dMenos);
+        //System.out.println("D-: " + dMenos);
         
         //Maximo de D
         Double d = maxD(dMas, dMenos);
-        System.out.println("D: " + d);
+        //System.out.println("D: " + d);
         return d;
 	} 
 	
@@ -79,9 +79,9 @@ public class Smirnov{
 	
 	public static Double calcular() {
 		ordenarNumeros();
-		for(int i = 0; i < observables.size(); i++) {
+		/*for(int i = 0; i < observables.size(); i++) {
 			System.out.println(observables.get(i));
-		}
+		}*/
 		ArrayList<Integer> listaI = crearListaI();
 		ArrayList<Double> listaiN = crearListaIN(listaI);
 		ArrayList<Double> listaAbsINRi = crearListaAbsINRi(listaiN);

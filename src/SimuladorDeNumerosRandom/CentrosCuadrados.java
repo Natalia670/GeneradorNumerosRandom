@@ -84,6 +84,7 @@ public class CentrosCuadrados extends JFrame {
 					resultados.setText("");
 					resultados.setText("La iteración debe ser mayor a 0");
 				} else {
+					resultados.setText("");
 					Integer sem = Integer.parseInt(semilla.getText());
 					Integer ite =  Integer.parseInt(iteraciones.getText());	
 					cuadradoMedio(sem.intValue(), ite.intValue());
@@ -147,7 +148,6 @@ public class CentrosCuadrados extends JFrame {
 	}
 
 	public static int cuadradoMedio(int semilla, int iteraciones){
-
         if(iteraciones == 0) {
             return semilla;
         } else {
@@ -172,8 +172,6 @@ public class CentrosCuadrados extends JFrame {
                     break;
             }
             medio = Integer.parseInt(numCompuesto.substring(2, 6));
-            //Checar como invertir lo de las iteraciones
-            resultados.setText("");
             resultados.append("Semilla: " + cuadrado + " | Generador: " + numCompuesto + " | No. Aleatorio: " + medio + "\n");
             return cuadradoMedio(medio, iteraciones-1);
         }
