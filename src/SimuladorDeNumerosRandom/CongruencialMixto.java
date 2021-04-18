@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class CongruencialMixto extends JFrame {
 
@@ -127,8 +128,10 @@ public class CongruencialMixto extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		resultados.setBounds(10, 25, 509, 184);
-		panel_1.add(resultados);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 25, 509, 184);
+		panel_1.add(scrollPane);
+		scrollPane.setViewportView(resultados);
 		
 		JButton calcularResultados = new JButton("Calcular");
 		calcularResultados.addActionListener(new ActionListener() {
@@ -164,9 +167,12 @@ public class CongruencialMixto extends JFrame {
 		panel_1_1.setBounds(601, 36, 512, 195);
 		contentPane.add(panel_1_1);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 25, 492, 120);
+		panel_1_1.add(scrollPane_1);
+		
 		JTextArea res_chi = new JTextArea();
-		res_chi.setBounds(10, 25, 492, 120);
-		panel_1_1.add(res_chi);
+		scrollPane_1.setViewportView(res_chi);
 		
 		JButton calcularChi = new JButton("Calcular");
 		calcularChi.setBounds(413, 156, 89, 23);
@@ -178,8 +184,10 @@ public class CongruencialMixto extends JFrame {
 		panel_1_2.setBounds(601, 242, 512, 220);
 		contentPane.add(panel_1_2);
 		
-		res_smirnov.setBounds(10, 32, 492, 130);
-		panel_1_2.add(res_smirnov);
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 32, 492, 130);
+		panel_1_2.add(scrollPane_2);
+		scrollPane_2.setViewportView(res_smirnov);
 		
 		JButton calcularSmirnov = new JButton("Calcular");
 		calcularSmirnov.addActionListener(new ActionListener() {
@@ -211,8 +219,10 @@ public class CongruencialMixto extends JFrame {
 		panel_1_3.setBounds(24, 491, 529, 220);
 		contentPane.add(panel_1_3);
 		
-		res_hullDobell.setBounds(10, 25, 494, 150);
-		panel_1_3.add(res_hullDobell);
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(10, 25, 494, 150);
+		panel_1_3.add(scrollPane_3);
+		scrollPane_3.setViewportView(res_hullDobell);
 		
 		JButton calcularHullDobell = new JButton("Calcular");
 		calcularHullDobell.addActionListener(new ActionListener() {

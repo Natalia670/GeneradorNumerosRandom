@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.*;
+import javax.swing.JScrollPane;
 
 public class Congruencial extends JFrame {
 
@@ -146,8 +147,10 @@ public class Congruencial extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		resultados.setBounds(10, 25, 509, 184);
-		panel_1.add(resultados);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 25, 509, 184);
+		panel_1.add(scrollPane);
+		scrollPane.setViewportView(resultados);
 		
 		JLabel lblNewLabel = new JLabel("M\u00E9todo Congruencial");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -160,9 +163,12 @@ public class Congruencial extends JFrame {
 		panel_1_1.setBounds(601, 36, 512, 195);
 		contentPane.add(panel_1_1);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 25, 492, 120);
+		panel_1_1.add(scrollPane_1);
+		
 		JTextArea textArea_1_1 = new JTextArea();
-		textArea_1_1.setBounds(10, 25, 492, 120);
-		panel_1_1.add(textArea_1_1);
+		scrollPane_1.setViewportView(textArea_1_1);
 		
 		JButton btnNewButton_2 = new JButton("Calcular");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -183,9 +189,12 @@ public class Congruencial extends JFrame {
 		panel_1_2.setBounds(601, 242, 512, 220);
 		contentPane.add(panel_1_2);
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 32, 492, 130);
+		panel_1_2.add(scrollPane_2);
+		
 		JTextArea resultadosSmirnov = new JTextArea();
-		resultadosSmirnov.setBounds(10, 32, 492, 130);
-		panel_1_2.add(resultadosSmirnov);
+		scrollPane_2.setViewportView(resultadosSmirnov);
 		
 		JButton btnSmirnov = new JButton("Calcular");
 		btnSmirnov.addActionListener(new ActionListener() {

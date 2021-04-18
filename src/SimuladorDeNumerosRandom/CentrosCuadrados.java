@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class CentrosCuadrados extends JFrame {
 
@@ -137,9 +138,10 @@ public class CentrosCuadrados extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		
-		resultados.setBounds(25, 28, 477, 304);
-		panel_2.add(resultados);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 28, 477, 304);
+		panel_2.add(scrollPane);
+		scrollPane.setViewportView(resultados);
 		
 		JLabel lblNewLabel = new JLabel("M\u00E9todo de Centros Cuadrados");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
