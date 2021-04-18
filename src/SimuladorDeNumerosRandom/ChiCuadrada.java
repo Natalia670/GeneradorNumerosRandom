@@ -20,19 +20,29 @@ public class ChiCuadrada {
 		Collections.sort(this.observables);
 	}
 	
-	public ArrayList<Integer> cleanFreqAbs(ArrayList<Integer> freqAbs){
+	public ArrayList<Integer> cleanFreqAbs(ArrayList<Integer> freqAbs, Integer k){
 		ArrayList<Integer> cleanfreqAbs = new ArrayList<Integer>();
+		double ei = observables.size()/k; // se tiene que redondear si queda decimal?
+		System.out.println("Ei "+ ei);
+		double totalEi = 0;
+		
 		for(int i = 0; i< freqAbs.size(); i++) {
 			if(freqAbs.get(i) < 5 && i != freqAbs.size()-1) {
 				int newnum = freqAbs.get(i) + freqAbs.get(i+1);
+				freqAbs.remove(i);
 				cleanfreqAbs.add(newnum);
+				totalEi = totalEi + ei * 2;
 			}else if(freqAbs.get(freqAbs.size()-1) < 5){
 				int newnum = freqAbs.get(i) + freqAbs.get(i-1);
 				cleanfreqAbs.add(freqAbs.get(i));
+				totalEi = totalEi + ei;
 			}else {
 				cleanfreqAbs.add(freqAbs.get(i));
+				totalEi = totalEi + ei;
+				
 			}
 		}
+		System.out.println("total ei " + totalEi);
 		return cleanfreqAbs;
 	}
 	
@@ -76,7 +86,7 @@ public class ChiCuadrada {
 	     
 	     ArrayList<ArrayList<Double>> ranges = new ArrayList<ArrayList<Double>>(k);
 	     ArrayList<Integer> a = findFreq(claseRound);
-	     ArrayList<Integer> b = cleanFreqAbs(a);
+	     ArrayList<Integer> b = cleanFreqAbs(a, k);
 	     
 	     for (int i = 0; i < a.size(); i++) {
 	            System.out.println(a.get(i));
@@ -87,9 +97,10 @@ public class ChiCuadrada {
 	      }
 	}
 	
+
 	public static double ChiTable(int n, double error) {
         ChiSquaredDistribution CHD = new ChiSquaredDistribution(n);
         return CHD.inverseCumulativeProbability(1-error);
     }
-	
+
 }
