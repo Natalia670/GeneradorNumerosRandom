@@ -31,6 +31,7 @@ public class Congruencial extends JFrame {
 	private final JTextField significancia = new JTextField();
 	private final JLabel lblNewLabel_2_2_1 = new JLabel("Significancia:");
 	static ArrayList<Double> observables = new ArrayList<Double>();
+	private JTextField grados;
 
 	/**
 	 * Launch the application.
@@ -62,7 +63,7 @@ public class Congruencial extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Inserte variables iniciales", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(30, 144, 255)));
-		panel.setBounds(24, 36, 529, 195);
+		panel.setBounds(24, 39, 529, 195);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -72,13 +73,13 @@ public class Congruencial extends JFrame {
 		semilla.setColumns(10);
 		
 		a = new JTextField();
-		a.setBounds(334, 35, 86, 20);
+		a.setBounds(305, 35, 86, 20);
 		a.setColumns(10);
 		panel.add(a);
 		
 		c = new JTextField();
 		c.setColumns(10);
-		c.setBounds(334, 78, 86, 20);
+		c.setBounds(305, 78, 86, 20);
 		panel.add(c);
 		
 		modulo = new JTextField();
@@ -100,11 +101,11 @@ public class Congruencial extends JFrame {
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("a: ");
-		lblNewLabel_2_1.setBounds(301, 35, 21, 20);
+		lblNewLabel_2_1.setBounds(274, 35, 21, 20);
 		panel.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("c: ");
-		lblNewLabel_2_2.setBounds(301, 80, 21, 17);
+		lblNewLabel_2_2.setBounds(274, 80, 21, 17);
 		panel.add(lblNewLabel_2_2);
 		
 		JLabel lblNewLabel_2_3 = new JLabel("Iteraciones: ");
@@ -133,8 +134,9 @@ public class Congruencial extends JFrame {
 		});
 		calcularRes.setBounds(423, 157, 89, 23);
 		panel.add(calcularRes);
+		significancia.setText("0.05");
 		significancia.setColumns(10);
-		significancia.setBounds(334, 125, 86, 20);
+		significancia.setBounds(329, 125, 86, 20);
 		
 		panel.add(significancia);
 		lblNewLabel_2_2_1.setBounds(237, 127, 85, 17);
@@ -167,21 +169,45 @@ public class Congruencial extends JFrame {
 		scrollPane_1.setBounds(10, 25, 492, 120);
 		panel_1_1.add(scrollPane_1);
 		
-		JTextArea textArea_1_1 = new JTextArea();
-		scrollPane_1.setViewportView(textArea_1_1);
+		JTextArea resultadosChi = new JTextArea();
+		scrollPane_1.setViewportView(resultadosChi);
+		
+		grados = new JTextField();
+		grados.setText("3");
+		grados.setBounds(153, 156, 86, 20);
+		panel_1_1.add(grados);
+		grados.setColumns(10);
 		
 		JButton btnNewButton_2 = new JButton("Calcular");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Double> b = prueba();
-				ChiCuadrada cc = new ChiCuadrada(b);
-				cc.CalcularValores();
-				double tabla = cc.ChiTable(3, 0.05);
-				System.out.print("Chi tabla " + tabla);
+				//ArrayList<Double> b = prueba();
+				double signi = Double.parseDouble(significancia.getText());
+				int grad = Integer.parseInt(grados.getText());
+				resultadosChi.setText("");
+				if(observables.size() == 0) {
+					resultados.append("Lista vacía");
+				}else {
+					ChiCuadrada cc = new ChiCuadrada(observables);
+					double tabla = cc.ChiTable(grad, signi);
+					double chiCuadradaSum = cc.CalcularValores();
+					boolean isAccepted = cc.acceptNullHypothesis(chiCuadradaSum, tabla);
+					resultadosChi.append("Chi obtenida: " + chiCuadradaSum + "\n");
+					resultadosChi.append("Chi tabla: " + tabla + "\n");
+					if(isAccepted) resultadosChi.append("Se acepta la hipótesis nula\n");
+					else resultadosChi.append("No se acepta la hipótesis nula \n");
+
+				}	
 			}
 		});
 		btnNewButton_2.setBounds(413, 156, 89, 23);
 		panel_1_1.add(btnNewButton_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Grados de libertad:");
+		lblNewLabel_3.setBounds(31, 160, 107, 14);
+		panel_1_1.add(lblNewLabel_3);
+		
+	
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -200,8 +226,10 @@ public class Congruencial extends JFrame {
 		btnSmirnov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Faltan validaciones de input
+				double signi = Double.parseDouble(significancia.getText());
+				
 				if(observables.size() > 0) {
-					double signi = Double.parseDouble(significancia.getText());
+					
 					resultadosSmirnov.setText("");
 					Smirnov smirnov = new Smirnov(observables);
 					double d = smirnov.calcular();
@@ -217,10 +245,12 @@ public class Congruencial extends JFrame {
 					resultadosSmirnov.append("Lista vacia \n");
 				}
 				
+				observables.clear();
 			}
 		});
 		btnSmirnov.setBounds(413, 174, 89, 23);
 		panel_1_2.add(btnSmirnov);
+		
 	}
 	
 	 public static int congruencial(int semilla, int modulo, int a, int c, int iteraciones){
@@ -234,72 +264,4 @@ public class Congruencial extends JFrame {
 	            return resIteracion;
 	        }
 	    }
-	 
-	 public static ArrayList<Double> prueba() {
-		 ArrayList<Double> observables = new ArrayList<Double>();
-<<<<<<< Updated upstream
-		 observables.add(0.770);
-		 observables.add(0.018);
-		 observables.add(0.037);
-		 observables.add(0.156);
-		 observables.add(0.191);
-		 observables.add(0.213);
-		 observables.add(0.233);
-		 observables.add(0.281);
-		 observables.add(0.383);
-		 observables.add(0.392);
-		 observables.add(0.408);
-		 observables.add(0.411);
-		 observables.add(0.434);
-		 observables.add(0.469);
-		 observables.add(0.541);
-		 observables.add(0.553);
-		 observables.add(0.575);
-		 observables.add(0.598);
-		 observables.add(0.668);
-		 observables.add(0.671);
-		 observables.add(0.719);
-		 observables.add(0.730);
-		 observables.add(0.771);
-		 observables.add(0.791);
-		 observables.add(0.819);
-		 observables.add(0.826);
-		 observables.add(0.894);
-		 observables.add(0.914);
-		 observables.add(0.984);
-		 observables.add(0.995);
-=======
-	        observables.add(0.018);
-	        observables.add(0.037);
-	        observables.add(0.056);
-	        observables.add(0.191);
-	        observables.add(0.213);
-	        observables.add(0.233);
-	        observables.add(0.281);
-	        observables.add(0.383);
-	        observables.add(0.392);
-	        observables.add(0.408);
-	        observables.add(0.411);
-	        observables.add(0.434);
-	        observables.add(0.469);
-	        observables.add(0.541);
-	        observables.add(0.553);
-	        observables.add(0.575);
-	        observables.add(0.598);
-	        observables.add(0.668);
-	        observables.add(0.671);
-	        observables.add(0.719);
-	        observables.add(0.730);
-	        observables.add(0.770);
-	        observables.add(0.771);
-	        observables.add(0.791);
-	        observables.add(0.819);
-	        observables.add(0.826);
-	        observables.add(0.894);
-	        observables.add(0.914);
-	        observables.add(0.984);
-	        observables.add(0.995);
->>>>>>> Stashed changes
-		 return observables;
-	 }
 }

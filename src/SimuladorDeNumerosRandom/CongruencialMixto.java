@@ -33,6 +33,7 @@ public class CongruencialMixto extends JFrame {
 	static JTextArea resultados = new JTextArea();
 	static JTextArea res_smirnov = new JTextArea();
 	static ArrayList<Double> observables = new ArrayList<Double>();
+	private JTextField grados;
 
 	/**
 	 * Launch the application.
@@ -118,6 +119,7 @@ public class CongruencialMixto extends JFrame {
 		panel.add(lblNewLabel_2_2_1);
 		
 		significancia = new JTextField();
+		significancia.setText("0.05");
 		significancia.setColumns(10);
 		significancia.setBounds(327, 119, 86, 20);
 		panel.add(significancia);
@@ -171,12 +173,43 @@ public class CongruencialMixto extends JFrame {
 		scrollPane_1.setBounds(10, 25, 492, 120);
 		panel_1_1.add(scrollPane_1);
 		
-		JTextArea res_chi = new JTextArea();
-		scrollPane_1.setViewportView(res_chi);
+		JTextArea resultadosChi = new JTextArea();
+		scrollPane_1.setViewportView(resultadosChi);
 		
 		JButton calcularChi = new JButton("Calcular");
+		calcularChi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//ArrayList<Double> b = prueba();
+				double signi = Double.parseDouble(significancia.getText());
+				int grad = Integer.parseInt(grados.getText());
+				resultadosChi.setText("");
+				if(observables.size() == 0) {
+					resultados.append("Lista vacía");
+				}else {
+					ChiCuadrada cc = new ChiCuadrada(observables);
+					double tabla = cc.ChiTable(grad, signi);
+					double chiCuadradaSum = cc.CalcularValores();
+					boolean isAccepted = cc.acceptNullHypothesis(chiCuadradaSum, tabla);
+					resultadosChi.append("Chi obtenida: " + chiCuadradaSum + "\n");
+					resultadosChi.append("Chi tabla: " + tabla + "\n");
+					if(isAccepted) resultadosChi.append("Se acepta la hipótesis nula\n");
+					else resultadosChi.append("No se acepta la hipótesis nula \n");
+
+				}	
+			}
+		});
 		calcularChi.setBounds(413, 156, 89, 23);
 		panel_1_1.add(calcularChi);
+		
+		grados = new JTextField();
+		grados.setText("3");
+		grados.setBounds(180, 156, 80, 20);
+		panel_1_1.add(grados);
+		grados.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Grados de libertad: ");
+		lblNewLabel_3.setBounds(45, 160, 125, 14);
+		panel_1_1.add(lblNewLabel_3);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);

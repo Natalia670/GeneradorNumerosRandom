@@ -80,10 +80,10 @@ public class CentrosCuadrados extends JFrame {
 				//Hay que hacer validaciones
 				if(semilla.getText().length() < 4) {
 					resultados.setText("");
-					resultados.setText("La semilla debe de ser de al menos 4 dÃ­gitos");
+					resultados.setText("La semilla debe de ser de al menos 4 dígitos");
 				} else if (Integer.parseInt(iteraciones.getText()) < 1){
 					resultados.setText("");
-					resultados.setText("La iteraciÃ³n debe ser mayor a 0");
+					resultados.setText("La iteración debe ser mayor a 0");
 				} else {
 					resultados.setText("");
 					Integer sem = Integer.parseInt(semilla.getText());
@@ -174,7 +174,8 @@ public class CentrosCuadrados extends JFrame {
                     break;
             }
             medio = Integer.parseInt(numCompuesto.substring(2, 6));
-            resultados.append("Semilla: " + cuadrado + " | Generador: " + numCompuesto + " | No. Aleatorio: " + medio + "\n");
+            double ri  = (double)medio/10000;
+            resultados.append("Semilla: " + cuadrado + " | Generador: " + numCompuesto + " | No. Aleatorio: " + medio + " | Ri : " + ri + "\n");
             return cuadradoMedio(medio, iteraciones-1);
         }
 	}
