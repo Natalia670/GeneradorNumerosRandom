@@ -77,7 +77,7 @@ public class SimuladorDeNumerosRandom extends JFrame {
 				cc.setVisible(true);
 			}
 		});
-		btnNewButton_1.setForeground(Color.WHITE);
+		btnNewButton_1.setForeground(SystemColor.desktop);
 		btnNewButton_1.setBackground(new Color(119, 136, 153));
 		
 		JButton btnNewButton_1_1 = new JButton("Congruencial");
@@ -87,7 +87,7 @@ public class SimuladorDeNumerosRandom extends JFrame {
 				c.setVisible(true);
 			}
 		});
-		btnNewButton_1_1.setForeground(Color.WHITE);
+		btnNewButton_1_1.setForeground(SystemColor.desktop);
 		btnNewButton_1_1.setBackground(new Color(119, 136, 153));
 		
 		JButton btnNewButton_1_2 = new JButton("Congruencial Mixto");
@@ -97,7 +97,7 @@ public class SimuladorDeNumerosRandom extends JFrame {
 				cm.setVisible(true);
 			}
 		});
-		btnNewButton_1_2.setForeground(new Color(255, 255, 255));
+		btnNewButton_1_2.setForeground(SystemColor.desktop);
 		btnNewButton_1_2.setBackground(new Color(112, 128, 144));
 		
 		JButton btnNewButton_1_3 = new JButton("Generador Multiplicativo");
@@ -108,7 +108,7 @@ public class SimuladorDeNumerosRandom extends JFrame {
 			}
 		});
 		btnNewButton_1_3.setBackground(new Color(119, 136, 153));
-		btnNewButton_1_3.setForeground(Color.WHITE);
+		btnNewButton_1_3.setForeground(SystemColor.desktop);
 		
 		JButton btnNewButton_1_4 = new JButton("Congruencial Lineal Combinado");
 		btnNewButton_1_4.addActionListener(new ActionListener() {
@@ -118,7 +118,7 @@ public class SimuladorDeNumerosRandom extends JFrame {
 			}
 		});
 		btnNewButton_1_4.setBackground(new Color(119, 136, 153));
-		btnNewButton_1_4.setForeground(Color.WHITE);
+		btnNewButton_1_4.setForeground(SystemColor.desktop);
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -165,8 +165,8 @@ public class SimuladorDeNumerosRandom extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(SystemColor.menu);
+		btnNewButton.setForeground(SystemColor.desktop);
 		btnNewButton.setBounds(667, 341, 89, 23);
 		panel_1.add(btnNewButton);
 	}
